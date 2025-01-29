@@ -9,6 +9,9 @@ from django.urls import reverse_lazy
 from .models import Document
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import subprocess
 
 import os
 import pathlib
@@ -21,6 +24,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from python_functions import data_reader, power_flow_solver
+from python_functions.StateEstimation.main_with_classes import StateEstimator
+
+### Python Libraries
+from dss import dss
+
 
 def get_user_storage(user):
     user_files = os.listdir('media/storage/group_{0}/user_{1}/'.format(user.group_id, user.id))
@@ -58,46 +66,6 @@ def powerflow_analysis(request):
         user_files = os.listdir(path)
     return render(request,'../templates/power_system_tools/powerflow_analysis.html',{'form':form,'user_data':request.user,'user_files':user_files})
 
-# def state_estimation(request):
-#     # form = FileUpload()
-#     # path = 'media/storage/group_{0}/user_{1}/'.format(request.user.group_id, request.user.id)
-#     # if os.path.exists(path):
-#     #     user_files = os.listdir(path)
-#     # else:
-#     #     os.makedirs(path)
-#     #     user_files = os.listdir(path)
-    
-#     # example_storage_path = 'media/examples/'
-#     # example_files = os.listdir(example_storage_path) if os.path.exists(example_storage_path) else []
-#     # return render(request,'../templates/power_system_tools/state_estimation.html',{'form':form,'user_data':request.user,'user_files':user_files,'example_files': example_files})
-#     user_storage_path = f'media/storage/group_{request.user.group_id}/user_{request.user.id}/'
-#     example_storage_path = 'media/examples/'
-
-#     # Get user files (files only)
-#     user_files = []
-#     if os.path.exists(user_storage_path):
-#         user_files = [
-#             {"name": f, "is_folder": False}  # User files are always files
-#             for f in os.listdir(user_storage_path)
-#             if os.path.isfile(os.path.join(user_storage_path, f))
-#         ]
-
-#     # Get example files & folders
-#     example_items = []
-#     if os.path.exists(example_storage_path):
-#         example_items = [
-#             {"name": f, "is_folder": os.path.isdir(os.path.join(example_storage_path, f))}
-#             for f in os.listdir(example_storage_path)
-#         ]
-
-#     context = {
-#         'user_files': user_files,
-#         'example_items': example_items,
-#         'example_base_path': example_storage_path,
-#         'user_data': request.user
-#     }
-
-#     return render(request, 'power_system_tools/state_estimation.html', context)
 
 def state_estimation(request):
     user_storage_path = f'media/storage/group_{request.user.group_id}/user_{request.user.id}/'
@@ -132,7 +100,6 @@ def state_estimation(request):
         'user_data': request.user
     }
     return render(request, 'power_system_tools/state_estimation.html', context)
-    
 
 
 def upload_files(request):
@@ -170,6 +137,54 @@ def load_folder(request):
 
     return JsonResponse({"items": folder_items, "parent_folder": base_path})
 
+def run_state_estimation(request):
+    print(request.method)
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            selected_file = data.get("filename", "")
+
+            if not selected_file:
+                return JsonResponse({"error": "No file selected"}, status=400)
+
+            # Define base paths
+            user_storage_path = "media/storage/group_{}/user_{}/".format(request.user.group_id, request.user.id)
+            example_storage_path = "media/examples/"
+
+            # Determine if file is from "Your Files" or "Example Files"
+            if os.path.exists(os.path.join(user_storage_path, selected_file)):  # Check in user files
+                file_path = os.path.join(user_storage_path, selected_file)
+            elif os.path.exists(os.path.join(example_storage_path, selected_file)):  # Check in example files
+                file_path = os.path.join(example_storage_path, selected_file)
+            else:
+                return JsonResponse({"error": "File not found"}, status=404)
+
+            # Run the Python script with the selected file as input
+            try:
+                print('python is started')
+                main = StateEstimator(dss, badDataNumber = 0, seedCounter=0, fileLocation=file_path)
+                result = main.solve()
+                print('python is finished')
+                # Extract required data
+                table_data = {
+                    "bus_list": main.SE.nodeOrder,  
+                    "voltages": main.SE.voltageState.tolist(),  
+                    "angles": main.SE.thetaState.tolist()  
+                }
+                
+                return JsonResponse({"message": "Success", "table_data": table_data})
+            except Exception as e:
+                print(f'Error in State Estimation: {e}')
+                    
+            if result.returncode == 0:
+                return JsonResponse({"message": "Success", "output": result.stdout})
+            else:
+                return JsonResponse({"error": "Script failed", "output": result.stderr}, status=500)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 class GraphData(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]

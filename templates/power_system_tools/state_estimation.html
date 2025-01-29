@@ -45,7 +45,16 @@
 
                 <!-- New Section: Displays Current Directory -->
                 <div id="current-directory" style="margin-top: 10px; font-weight: bold;">
-                    Selected Item: <span id="current-directory-path"> </span>
+                    Selected Directory: <span id="current-directory-path"> </span>
+                </div>
+                <div id="current-file" style="margin-top: 10px; font-weight: bold;">
+                    Selected File: <span id="current-file-path"> </span>
+                </div>
+
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                <div>
+                    <button id="run_SE" class="btn btn-primary" style="margin-top: 10px;">Run SE</button>
                 </div>
             </div>
         </div>
@@ -99,6 +108,7 @@
 
 
 <script src="{% static 'js/state_estimation/folderNavigate.js' %}"></script>
+<script src="{% static 'js/state_estimation/runSE.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- <script src="{% static 'js/pf_solution_table.js' %}"></script>
 <script src="{% static 'js/network_graph_v2.js' %}"></script> -->

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let dropdown = document.getElementById("id_system");
     let currentFolder = "initial";
     let currentDirectoryDisplay = document.getElementById("current-directory-path");
+    let currentFileDisplay = document.getElementById("current-file-path");
     // Attach event listener to the entire document (event delegation)
     document.addEventListener("change", function (event) {
         if (event.target && event.target.id === "id_system") {
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let parentFolder = document.getElementById("current-directory-path").innerText.split("/").slice(0, -1).join("/");
             console.log("Going back to:", parentFolder);
             updateCurrentDirectory(parentFolder);
+            updateCurrentFile("");
 
             // If parentFolder is empty, return to the initial state
             if (!parentFolder || parentFolder === "") {
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(data => updateDropdown(data.items, parentFolder))
                 .catch(error => console.error("Error loading parent folder:", error));
-            // return;
+            return;
         }
 
         // Detect if the selected item is a folder
@@ -48,6 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => response.json())
                 .then(data => updateDropdown(data.items, folderPath))
                 .catch(error => console.error("Error loading folder:", error));
+        }
+        else {
+            updateCurrentFile(selectedItem);
         }
         
     }
@@ -139,6 +144,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateCurrentDirectory(folderPath) {
         currentDirectoryDisplay.innerText = folderPath;
+    }
+
+    function updateCurrentFile(filePath) {
+        currentFileDisplay.innerText = filePath;
     }
 
 });
