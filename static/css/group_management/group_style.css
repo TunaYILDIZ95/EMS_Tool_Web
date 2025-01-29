@@ -1,0 +1,73 @@
+
+.sticky-header {
+    position: fixed !important;
+    top: 0 !important;
+    width: 100% !important;
+    transition: 0.4s !important;
+    z-index: 1000 !important;
+  }
+
+.main{
+    margin-top: 100px !important;
+}
+
+#header{
+    background-color: white !important;
+    padding: 15px 0px !important;
+    height: 20px !important;
+    overflow: hidden !important; 
+}
+
+#branding{
+    position: relative;
+    padding: 15px 15px !important;
+}
+
+
+.object-tools{
+    z-index: 1 !important;
+}
+
+#branding a{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size: 18px !important;
+    color: #337ab7 !important;
+    font-weight: bold;
+}
+
+.user_items, .user_items a, .user_items button{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size: 14px !important;
+    color: #337ab7 !important;
+    font-weight: bold !important;
+}
+
+#searchbar { 
+    height: 19px !important;
+}
+
+
+.user_items {
+    float: right !important;
+    margin-right: 10px !important;
+}
+
+
+.dropdown-menu > li {
+    list-style-type: none !important;
+}
+
+.nav > li > a {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size: 14px !important;
+    color: rgb(51, 122, 183) !important;
+}
+
+.navbar-header > a {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    color: rgb(51, 122, 183) !important;
+}
+
+.navbar-brand:hover{
+    color: black !important;
+}

@@ -1,0 +1,143 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../static/css/home/homestyle.css"/>
+    <link rel="stylesheet" href="../static/css/home/buttonstyle.css"/> 
+</head>
+
+{% extends 'base.html' %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block body %}
+
+<body>
+    <main>
+      <section id="showcase">
+        <h1>Welcome to Powersystem!</h1>
+      </section>
+      <section id="how-it-works">
+        <div class="row">
+          <h2 class="section-title">Team Mission / Vision</h2>
+          <p style="word-wrap: break-word;">
+            We are one of the research groups in Boston area. Our mission is serving an easy access power system operations tools to everyone for their needs.
+            In our cloud base power system service, you can find different type of tools that are mainly used for transmission and distribution power system area.
+            Our vision is to reach each an every person who is working on power system area to make their works easier.
+          </p>
+        </div>
+        <div class="row">
+          <div class="icon-box col-3">
+            <i class="fa-solid fa-code-fork fa-3x"></i>
+            <h3>Power Flow Solver</h3>
+            <p>
+              Power Flow Solver is the essential tool for almost every operation in power system area. 
+              Our product contains, both distribution and transmission system Power Flow Solver.
+            </p>
+          </div>
+          <div class="icon-box col-3">
+            <i class="fa-solid fa-play fa-3x"></i>
+            <h3>State Estimation</h3>
+            <p>
+              State Estimation is one of the important tool for situational awareness of system operators.
+              Our product contains, both distribution and transmission State Estimation Tool.
+            </p>
+          </div>
+          <div class="icon-box col-3">
+            <i class="fa-solid fa-bar-chart fa-3x"></i>
+            <h3>Topology Proccessor</h3>
+            <p>
+              Topology Proccessor is one of the crucial tool for each opeartion in power system area. Each application
+              in Power System requires the pre-process of raw data corresponding to the system. 
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="features">
+        <div class="row">
+          <div class="col-2 features__left"></div>
+          <div class="col-2 features__right">
+            <h3>Our Products</h3>
+            <p>
+              We are serving a different type of tools that meets user needs in power system area.
+              All of our tools are based on researches in power system area.
+            </p>
+            <a class="btn-content btn-secondary" href="#">View Features</a>
+          </div>
+        </div>
+      </section>
+      
+      <section id="plans">
+        <div class="row">
+          <h2 class="section-title">Become a premium member!</h2>
+          <div class="container clearfix">
+            {% if user_data.sub_type == 'Guest' and not request.user.is_authenticated %}
+            <div class="plan">
+              <div class="inner-plan">
+                <h2>Free</h2>
+                <h3>0/month</h3>
+                <ul class="plan__features">
+                  <li>Only Power Flow available</li>
+                  <li>Limited System Size</li>
+                  <li>200 MB Storage Area</li>
+                  <li>Available for one person</li>
+                </ul>
+                <a class="btn-content btn-secondary" href="{% url 'pages:subscription_signup' sub_type='Guest' %}">Choose Plan</a>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="plan">
+              <div class="inner-plan">
+                <h2>Silver</h2>
+                <h3>$5.99/month</h3>
+                <ul class="plan__features">
+                  <li>Power Flow and SE available</li>
+                  <li>Unlimited System Size</li>
+                  <li>1 GB Storage Area</li>
+                  <li>Available up to 5 people</li>
+                </ul>
+                <a class="btn-content btn-secondary" href="{% url 'pages:subscription_signup' sub_type='Silver' %} ">Choose Plan</a>
+              </div>
+            </div>
+
+            <div class="plan plan--featured">
+              <div class="inner-plan recommended_plan">
+                <h2 class="plan__badge">Recommended</h2>
+                <h2>Gold</h2>
+                <h3>$9.99/month</h3>
+                <ul class="plan__features">
+                  <li>All Tools available</li>
+                  <li>Unlimited System Size</li>
+                  <li>2 GB Storage Area</li>
+                  <li>Available up to 10 people</li>
+                </ul>
+                <a class="btn btn-primary" href="{% url 'pages:subscription_signup' sub_type='Gold' %} ">Choose Plan</a>
+              </div>
+            </div>
+
+            <div class="plan">
+              <div class="inner-plan">
+                <h2>Platinum</h2>
+                <h3>$19.99/month</h3>
+                <ul class="plan__features">
+                  <li>All Tools available</li>
+                  <li>Unlimited System Size</li>
+                  <li>6 GB Storage Area</li>
+                  <li>Available up to 30 people</li>
+                </ul>
+                <a class="btn-content btn-secondary" href="{% url 'pages:subscription_signup' sub_type='Platinum' %} ">Choose Plan</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+
+.contactInformation {
+    margin-top: 4%;
+    padding: 50px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+}
+
+.contactInformation h1{
+    margin-bottom: 50px;
+    border-bottom: 1px solid white;
+    padding-bottom: 5px;
+}
+
+.contactInformation p{
+    font-size: large;
+}
+
+.link{
+    color: rgb(0, 153, 255);
+}
+
+.link:hover{
+    color: red;
+}
+
+.link:active{
+    color: orangered;
+}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} User Register {% endblock %}
+
+
+
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo Registration</title>
+</head>
+<body style="margin-bottom: 30px;">
+    <section>
+        <div class="container"  style="justify-content: center;align-items: center;">
+          <div class="row">
+            <div class="col-md-6 mx-auto" style="margin-left: 20%;">
+              <div class="card">
+                <div class="card-header text-black">
+                  <h2>Register</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                      {% csrf_token %}
+                      {{ form|crispy }}
+                         <input type="submit" value="Register" class="btn btn-block btn-primary">
+                    </form>
+                 </div>
+                    </div>   
+                </div>
+              </div>
+            </div>
+        </div>
+      </section>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static 'js/load_cities.js' %}"></script>
+
+{% endblock %}

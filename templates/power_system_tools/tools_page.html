@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}File Upload{% endblock %}
+
+{% block body %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/powersystem_tools/tools_page.css">
+    <!-- <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script> -->
+    <!-- <script src = "https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script> -->
+    <script src = "https://d3js.org/d3.v6.min.js"></script>
+    <script src = "https://observablehq.com/@d3/force-directed-graph"></script>
+    <!-- <script src = "https://unpkg.com/chart.js@3"></script>
+    <script src = "https://unpkg.com/chartjs-chart-graph@3"></script>
+    <script src = "https://unpkg.com/chartjs-plugin-datalabels@2.1.0/dist/chartjs-plugin-datalabels.js"></script>
+    <script src = "https://unpkg.com/browse/chartjs-plugin-labels@1.1.0/build/chartjs-plugin-labels.min.js"></script> -->
+    
+</head>
+
+<div class="container-fluid"> 
+    <div class="row-fluid">  
+        <div class = 'span4'>
+            <div class="form" id = "bar1">
+                {% csrf_token %}
+                <div id="div_id_system_select">
+                    <label for = "id_system">
+                        Please Select System
+                    </label>
+                    <select name = "system_select" class = "select form-control" id = "id_system">
+                        <option value = ''>------------</option>
+                        {% for file in user_files %}
+                        <option value = '{{file}}'>{{file}}</option>
+                        {% endfor %} 
+                    </select>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data" action="{% url 'upload_files' %}" style="margin-top: 20px;">
+                    {% csrf_token %}
+                    <div id="div_id_docfile" class="form-group">
+                        <label for="id_docfile" class=" requiredField">Select Upload Files:</label> 
+                        <input type="file" name="docfile" multiple="" class="clearablefileinput form-control-file" required="" id="id_docfile"> 
+                    </div> 
+                    <button type="submit" class="btn btn-primary">Upload Files</button>
+                </form>
+            </div>
+            <!-- <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab-3463-1" data-toggle="tab">File Selection</a>
+                </li>
+                <li>
+                    <a href="#tab-3463-2" data-toggle="tab">File Upload</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-3463-1">
+                    <div id="lfcPlot" class="shiny-plot-output" style="width: 100% ; height: 460px"></div>
+                </div>
+                <div class="tab-pane" id="tab-3463-2">
+                    <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple />
+                    <button type="submit" class="btn btn-primary">Upload Files</button>
+                </div>
+            </div> -->
+        </div>
+        <!-- <div class = 'col-sm-6 col-sm-offset-2 col-md-8 col-md-offset-0' style="margin-left: 100px;">
+            <canvas id="myChart"></canvas>
+        </div> -->
+        <div class="span8">
+            <div class="tab1">
+                <div class="tabbable tabs-above">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-8142-1" data-toggle="tab">Power Flow Solution</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-2" data-toggle="tab" id="show_graph">System Graph</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-3" data-toggle="tab">Line Flows</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-4" data-toggle="tab">Bus Data</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-8142-1">
+                            <table class="table" id = "informationTable">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Bus Name</th>
+                                    <th scope="col">Phase</th>
+                                    <th scope="col">Voltage</th>
+                                    <th scope="col">Angle</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="informationTableContent">
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="tab-pane" id="tab-8142-2">
+                            <!-- <canvas id="system_graph"></canvas> -->
+                            <div id="system_graph"></div>
+                            <!-- <svg id="system_graph" width="1200" height="500"></svg> -->
+                        </div>
+                        <div class="tab-pane" id="tab-8142-3"><iframe src="" width="750" height="600"></iframe></div>
+                        <div class="tab-pane" id="tab-8142-4"><iframe src="" width="750" height="400"></iframe></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="{% static 'js/network_graph_chart.js' %}"></script> -->
+<script src="{% static 'js/pf_solution_table.js' %}"></script>
+<script src="{% static 'js/network_graph_v2.js' %}"></script>
+
+{% endblock %}

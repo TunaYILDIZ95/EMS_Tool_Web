@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block body %}
+<head>
+    <link rel = "stylesheet" href = "{% static 'css/contact_us/contact_style.css' %}">
+</head>
+
+<body>
+	<div class="contactInformation">
+		<h1>Contact Information</h1>
+		<h2>Adress:</h2>
+		<p>Power System Street Boston MA</p>
+		<h2>Email:<a class = "link" href="mailto:tunayildiz4@gmail.com">tunayildiz4@gmail.com</a></h2>
+	</div>
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Group Management {% endblock %}
+
+{% block body %}
+
+<head>
+    <title>Group Management</title>
+    {% block css %}
+        <link rel="stylesheet" href="/static/admin/css/base.css">  
+    {% endblock %}
+    <link rel="stylesheet" href="/static/admin/css/dark_mode.css"> 
+    <link rel="stylesheet" href="/static/admin/css/nav_sidebar.css">
+    <script src="/static/admin/js/nav_sidebar.js" defer></script>
+    <link rel="stylesheet" href="/static/admin/css/changelists.css">
+    <script src="/admin/jsi18n/"></script>
+    <script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+    <script src="/static/admin/js/jquery.init.js"></script>
+    <script src="/static/admin/js/core.js"></script>
+    <script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+    <script src="/static/admin/js/actions.js"></script>
+    <script src="/static/admin/js/urlify.js"></script>
+    <script src="/static/admin/js/prepopulate.js"></script>
+    <script src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+    <script src="/static/admin/js/filters.js" defer></script>
+    
+    
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="/static/admin/css/responsive.css">
+    <link rel="stylesheet" href="/static/css/group_management/group_style.css">
+    
+    
+    <meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+<body class=" app-accounts model-user change-list" data-admin-utc-offset="0" >
+<!-- Container -->
+<div id="container">     
+    <div class="main" id="main">   
+        <div class="content">         
+            <!-- Content -->
+            <div id="content" class="">               
+                <h1>Select user to change</h1>                
+                <div id="content-main">                         
+                    {% if not data.user_data.remaining_user_number == 0 %}
+                    <ul class="object-tools">       
+                        <li>        
+                            <a href="{% url 'user_register' %}" class="addlink">
+                                Add user
+                            </a>
+                        </li>    
+                    </ul>                    
+                    {% endif %}
+ 
+                    <div class="module filtered" id="changelist">
+                        <div class="changelist-form-container">  
+                            <div id="toolbar"><form id="changelist-search" method="get" action="{% url 'pages:search_items' %}">
+                                <div><!-- DIV needed for valid HTML -->
+                                    <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
+                                    <input type="text" size="40" name="qsearch" value="" id="searchbar" autofocus>
+                                    <input type="submit" value="Search">   
+                                </div>     
+                            </form></div> 
+                            <form id="changelist-form" method="POST" action= "{% url 'delete_user' %}">
+                                {% csrf_token %}
+                                <div class="actions">                                                                                                           
+                                        <button class="button">Delete Users</button>                                  
+                                    <span class="action-counter" data-actions-icnt="{{data.group_data|length}}">0 of {{data.group_data|length}} selected</span>
+                                </div>
+                                <div class="results">
+                                    <table id="result_list">
+                                        <thead>
+                                            <tr>                                               
+                                                <th scope="col" class="action-checkbox-column">                                                   
+                                                    <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
+                                                    <div class="clear"></div>
+                                                </th>
+                                                <th scope="col" class="sortable column-username">
+                                                    <div class="text"><a href="{% url 'pages:home' %}">Username</a></div>
+                                                    <div class="clear"></div>
+                                                </th>
+                                                <th scope="col" class="sortable column-email">
+                                                    <div class="text"><a href="{% url 'pages:home' %}">Email</a></div>
+                                                    <div class="clear"></div>
+                                                </th>
+                                                <th scope="col" class="sortable column-first_name">
+                                                    <div class="text"><a href="{% url 'pages:home' %}">First name</a></div>
+                                                    <div class="clear"></div>
+                                                </th>
+                                                <th scope="col" class="sortable column-last_name">
+                                                    <div class="text"><a href="{% url 'pages:home' %}">Last name</a></div>
+                                                    <div class="clear"></div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for users in data.group_data %} 
+                                                <tr>
+                                                    <td class="action-checkbox"><input type="checkbox" name="checks[]" value="{{ users.id }}" class="action-select"></td>
+                                                    <th class="field-username" name="username" value="{{ users.id }}">
+                                                        <a href="{% url 'pages:edit_group_user' group_id=user.group_id id=users.id %}">{{ users.username }}</a>
+                                                    </th>
+                                                    <td class="field-email">{{ users.email }}</td>
+                                                    <td class="field-first_name">{{ users.first_name }}</td>
+                                                    <td class="field-last_name">{{ users.last_name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>     
+                                <p class="paginator">                                   
+                                    Total {{data.group_data|length}} users and  {{data.user_data.remaining_user_number}} can be added                        
+                                </p>                               
+                            </form>
+                        </div>                  
+                        <div id="changelist-filter">
+                            <h2>Filter</h2>               
+                            <details data-filter-title="staff status" open>
+                                <summary>
+                                    By staff status 
+                                </summary>
+                                <ul>                                   
+                                    <li class="selected">
+                                        <a href="?">All</a></li>                                       
+                                        <li>
+                                            <a href="?is_staff__exact=1">Yes</a>
+                                        </li>                                           
+                                        <li>
+                                            <a href="?is_staff__exact=0">No</a>
+                                        </li>                                             
+                                    </ul>
+                                </details>
+                                
+                                <details data-filter-title="superuser status" open>
+                                    <summary>
+                                        By superuser status 
+                                    </summary>
+                                    <ul>     
+                                        <li class="selected">
+                                            <a href="?">All</a>
+                                        </li> 
+                                        <li>
+                                            <a href="?is_superuser__exact=1">Yes</a>
+                                        </li>  
+                                        <li>
+                                            <a href="?is_superuser__exact=0">No</a>
+                                        </li>   
+                                    </ul>
+                                </details>
+                                
+                                <details data-filter-title="active" open>
+                                    <summary>
+                                        By active 
+                                    </summary>
+                                    <ul>  
+                                        <li class="selected">
+                                            <a href="?">All</a>
+                                        </li>
+                                        <li>
+                                            <a href="?is_active__exact=1">Yes</a>
+                                        </li>
+                                        <li>
+                                            <a href="?is_active__exact=0">No</a>
+                                        </li>     
+                                    </ul>
+                                </details>    
+                            </div>  
+                        </div>
+                    </div>
+                    <br class="clear">
+                </div>
+                <!-- END Content -->
+            </div>
+        </div>
+    </div>
+    <!-- END Container --> 
+    <script>
+        $(window).scroll(function(){
+            if ($(window).scrollTop() >= 330) {
+                $('.sticky-header').addClass('fixed');
+            }
+            else {
+                $('.sticky-header').removeClass('fixed');
+            }
+        });
+    </script>
+    
+</body>
+
+
+
+{% endblock %}
