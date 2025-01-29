@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}State Estimation{% endblock %}
+
+{% block body %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/powersystem_tools/powerflow_analysis.css">
+    <script src = "https://d3js.org/d3.v6.min.js"></script>
+    <script src = "https://observablehq.com/@d3/force-directed-graph"></script>
+</head>
+
+<div class="container-fluid"> 
+    <div class="row-fluid">  
+        <div class = 'span4'>
+            <div class="form" id="bar1">
+                <div id="div_id_system_select">
+                    <label for="id_system">Please Select a File or Folder</label>
+                    <select name="system_select" class="select form-control" id="id_system">
+                        <option value=''>------------</option>
+
+                        {% if user_files %}
+                        <optgroup label="Your Files">
+                            {% for file in user_files %}
+                            <option value="{{ file.name }}" data-folder="false">📄 {{ file.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        {% endif %}
+            
+                        {% if example_items %}
+                        <optgroup label="Example Files">
+                            {% for item in example_items %}
+                            <option value="{{ item.name }}" data-folder="{{ item.is_folder|yesno:'true,false' }}">
+                                {{ item.is_folder|yesno:'📁 ,📄 ' }}{{ item.name }}
+                            </option>
+                            {% endfor %}
+                        </optgroup>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <!-- New Section: Displays Current Directory -->
+                <div id="current-directory" style="margin-top: 10px; font-weight: bold;">
+                    Selected Item: <span id="current-directory-path"> </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="span8">
+            <div class="tab1">
+                <div class="tabbable tabs-above">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-8142-1" data-toggle="tab">Power Flow Solution</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-2" data-toggle="tab" id="show_graph">System Graph</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-3" data-toggle="tab">Line Flows</a>
+                        </li>
+                        <li>
+                            <a href="#tab-8142-4" data-toggle="tab">Bus Data</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-8142-1">
+                            <table class="table" id = "informationTable">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Bus Name</th>
+                                    <th scope="col">Phase</th>
+                                    <th scope="col">Voltage</th>
+                                    <th scope="col">Angle</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="informationTableContent">
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="tab-pane" id="tab-8142-2">
+
+                            <div id="system_graph"></div>
+
+                        </div>
+                        <div class="tab-pane" id="tab-8142-3"><iframe src="" width="750" height="600"></iframe></div>
+                        <div class="tab-pane" id="tab-8142-4"><iframe src="" width="750" height="400"></iframe></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/state_estimation/folderNavigate.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="{% static 'js/pf_solution_table.js' %}"></script>
+<script src="{% static 'js/network_graph_v2.js' %}"></script> -->
+
+
+{% endblock %}

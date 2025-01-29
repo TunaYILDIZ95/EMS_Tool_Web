@@ -1,0 +1,134 @@
+Clear 
+New Circuit.ieee14bus BasekV=132.0 Bus1=1 pu=1.06  MVASC3=5000000  5000000
+ 
+
+!Defining Transformers
+New Transformer.Trafo1.4-7 kVAs=[100000 100000] XHL=20.9 PPM=0 
+~ Wdg=1 R=0 kV=132.00 Bus=4 Tap=0.978
+~ Wdg=2 R=0 kV=1.00 Bus=7 
+~ %loadloss=0
+
+New Transformer.Trafo2.4-9 kVAs=[100000 100000] XHL=55.6 PPM=0 
+~ Wdg=1 R=0 kV=132.00 Bus=4 Tap=0.969
+~ Wdg=2 R=0 kV=33.00 Bus=9 
+~ %loadloss=0
+
+New Transformer.Trafo3.5-6 kVAs=[100000 100000] XHL=25.2 PPM=0 
+~ Wdg=1 R=0 kV=132.00 Bus=5 Tap=0.932
+~ Wdg=2 R=0 kV=33.00 Bus=6 
+~ %loadloss=0
+
+New Transformer.Trafo4.7-8 kVAs=[100000 100000] XHL=17.6 PPM=0 
+~ Wdg=1 R=0 kV=1.00 Bus=7 Tap=1.000
+~ Wdg=2 R=0 kV=11.00 Bus=8 
+~ %loadloss=0
+
+New Transformer.Trafo5.7-9 kVAs=[100000 100000] XHL=11.0 PPM=0 
+~ Wdg=1 R=0 kV=1.00 Bus=7 Tap=1.000
+~ Wdg=2 R=0 kV=33.00 Bus=9 
+~ %loadloss=0
+
+
+!Defining Lines
+New line.Line1.1-2 Phases=3 Bus1=1.1.2.3  Bus2=2.1.2.3  R1=3.376771  X1=10.309781 R0=10.130314 X0=30.929342 C1=803.812844 C0=267.93761463 Length=1
+New line.Line2.1-5 Phases=3 Bus1=1.1.2.3  Bus2=5.1.2.3  R1=9.414187  X1=38.862490 R0=28.242562 X0=116.587469 C1=749.007423 C0=249.66914091 Length=1
+New line.Line3.2-3 Phases=3 Bus1=2.1.2.3  Bus2=3.1.2.3  R1=8.187538  X1=34.494293 R0=24.562613 X0=103.482878 C1=666.799291 C0=222.26643032 Length=1
+New line.Line4.2-4 Phases=3 Bus1=2.1.2.3  Bus2=4.1.2.3  R1=10.125086  X1=30.721997 R0=30.375259 X0=92.165990 C1=569.367431 C0=189.78914370 Length=1
+New line.Line5.2-5 Phases=3 Bus1=2.1.2.3  Bus2=5.1.2.3  R1=9.922968  X1=30.296851 R0=29.768904 X0=90.890554 C1=517.606756 C0=172.53558518 Length=1
+New line.Line6.3-4 Phases=3 Bus1=3.1.2.3  Bus2=4.1.2.3  R1=11.675822  X1=29.800267 R0=35.027467 X0=89.400802 C1=526.740992 C0=175.58033080 Length=1
+New line.Line7.4-5 Phases=3 Bus1=4.1.2.3  Bus2=5.1.2.3  R1=2.326104  X1=7.337246 R0=6.978312 X0=22.011739 C1=194.863720 C0=64.95457324 Length=1
+New line.Line8.6-11 Phases=3 Bus1=6.1.2.3  Bus2=11.1.2.3  R1=1.034332  X1=2.166021 R0=3.102997 X0=6.498063 C1=0.000000 C0=0.00000000 Length=1
+New line.Line9.6-12 Phases=3 Bus1=6.1.2.3  Bus2=12.1.2.3  R1=1.338490  X1=2.785771 R0=4.015470 X0=8.357313 C1=0.000000 C0=0.00000000 Length=1
+New line.Line10.6-13 Phases=3 Bus1=6.1.2.3  Bus2=13.1.2.3  R1=0.720373  X1=1.418640 R0=2.161120 X0=4.255921 C1=0.000000 C0=0.00000000 Length=1
+New line.Line11.9-10 Phases=3 Bus1=9.1.2.3  Bus2=10.1.2.3  R1=0.346411  X1=0.920205 R0=1.039233 X0=2.760615 C1=0.000000 C0=0.00000000 Length=1
+New line.Line12.9-14 Phases=3 Bus1=9.1.2.3  Bus2=14.1.2.3  R1=1.384228  X1=2.944438 R0=4.152684 X0=8.833315 C1=0.000000 C0=0.00000000 Length=1
+New line.Line13.10-11 Phases=3 Bus1=10.1.2.3  Bus2=11.1.2.3  R1=0.893525  X1=2.091642 R0=2.680574 X0=6.274927 C1=0.000000 C0=0.00000000 Length=1
+New line.Line14.12-13 Phases=3 Bus1=12.1.2.3  Bus2=13.1.2.3  R1=2.405819  X1=2.176693 R0=7.217456 X0=6.530080 C1=0.000000 C0=0.00000000 Length=1
+New line.Line15.13-14 Phases=3 Bus1=13.1.2.3  Bus2=14.1.2.3  R1=1.861428  X1=3.789938 R0=5.584283 X0=11.369813 C1=0.000000 C0=0.00000000 Length=1
+
+!Defining Loads
+! BALANCED LOADS
+!/* 
+New Load.2a  Bus1=2.1 Phases=1 Model=1 kV=76.21 kW=7161 kvar=4191 vminpu=0.9 vmaxpu=1.10
+New Load.2b  Bus1=2.2 Phases=1 Model=1 kV=76.21 kW=7161 kvar=4191 vminpu=0.9 vmaxpu=1.10
+New Load.2c  Bus1=2.3 Phases=1 Model=1 kV=76.21 kW=7161 kvar=4191 vminpu=0.9 vmaxpu=1.10
+New Load.3a  Bus1=3.1 Phases=1 Model=1 kV=76.21 kW=31086 kvar=6270 vminpu=0.9 vmaxpu=1.10
+New Load.3b  Bus1=3.2 Phases=1 Model=1 kV=76.21 kW=31086 kvar=6270 vminpu=0.9 vmaxpu=1.10
+New Load.3c  Bus1=3.3 Phases=1 Model=1 kV=76.21 kW=31086 kvar=6270 vminpu=0.9 vmaxpu=1.10
+New Load.4a  Bus1=4.1 Phases=1 Model=1 kV=76.21 kW=15774 kvar=-1287 vminpu=0.9 vmaxpu=1.10
+New Load.4b  Bus1=4.2 Phases=1 Model=1 kV=76.21 kW=15774 kvar=-1287 vminpu=0.9 vmaxpu=1.10
+New Load.4c  Bus1=4.3 Phases=1 Model=1 kV=76.21 kW=15774 kvar=-1287 vminpu=0.9 vmaxpu=1.10
+New Load.5a  Bus1=5.1 Phases=1 Model=1 kV=76.21 kW=2508 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.5b  Bus1=5.2 Phases=1 Model=1 kV=76.21 kW=2508 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.5c  Bus1=5.3 Phases=1 Model=1 kV=76.21 kW=2508 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.6a  Bus1=6.1 Phases=1 Model=1 kV=19.05 kW=3696 kvar=2475 vminpu=0.9 vmaxpu=1.10
+New Load.6b  Bus1=6.2 Phases=1 Model=1 kV=19.05 kW=3696 kvar=2475 vminpu=0.9 vmaxpu=1.10
+New Load.6c  Bus1=6.3 Phases=1 Model=1 kV=19.05 kW=3696 kvar=2475 vminpu=0.9 vmaxpu=1.10
+New Load.9a  Bus1=9.1 Phases=1 Model=1 kV=19.05 kW=9735 kvar=5478 vminpu=0.9 vmaxpu=1.10
+New Load.9b  Bus1=9.2 Phases=1 Model=1 kV=19.05 kW=9735 kvar=5478 vminpu=0.9 vmaxpu=1.10
+New Load.9c  Bus1=9.3 Phases=1 Model=1 kV=19.05 kW=9735 kvar=5478 vminpu=0.9 vmaxpu=1.10
+New Load.10a  Bus1=10.1 Phases=1 Model=1 kV=19.05 kW=2970 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.10b  Bus1=10.2 Phases=1 Model=1 kV=19.05 kW=2970 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.10c  Bus1=10.3 Phases=1 Model=1 kV=19.05 kW=2970 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.11a  Bus1=11.1 Phases=1 Model=1 kV=19.05 kW=1155 kvar=594 vminpu=0.9 vmaxpu=1.10
+New Load.11b  Bus1=11.2 Phases=1 Model=1 kV=19.05 kW=1155 kvar=594 vminpu=0.9 vmaxpu=1.10
+New Load.11c  Bus1=11.3 Phases=1 Model=1 kV=19.05 kW=1155 kvar=594 vminpu=0.9 vmaxpu=1.10
+New Load.12a  Bus1=12.1 Phases=1 Model=1 kV=19.05 kW=2013 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.12b  Bus1=12.2 Phases=1 Model=1 kV=19.05 kW=2013 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.12c  Bus1=12.3 Phases=1 Model=1 kV=19.05 kW=2013 kvar=528 vminpu=0.9 vmaxpu=1.10
+New Load.13a  Bus1=13.1 Phases=1 Model=1 kV=19.05 kW=4455 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.13b  Bus1=13.2 Phases=1 Model=1 kV=19.05 kW=4455 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.13c  Bus1=13.3 Phases=1 Model=1 kV=19.05 kW=4455 kvar=1914 vminpu=0.9 vmaxpu=1.10
+New Load.14a  Bus1=14.1 Phases=1 Model=1 kV=19.05 kW=4917 kvar=1650 vminpu=0.9 vmaxpu=1.10
+New Load.14b  Bus1=14.2 Phases=1 Model=1 kV=19.05 kW=4917 kvar=1650 vminpu=0.9 vmaxpu=1.10
+New Load.14c  Bus1=14.3 Phases=1 Model=1 kV=19.05 kW=4917 kvar=1650 vminpu=0.9 vmaxpu=1.10
+!*/
+! UNBALANCED LOADS a-20% b-30% c-50%
+/* 
+New Load.2a  Bus1=2.1 Phases=1 Model=1 kV=76.21 kW=4340 kvar=2540 vminpu=0.9 vmaxpu=1.10
+New Load.2b  Bus1=2.2 Phases=1 Model=1 kV=76.21 kW=6510 kvar=3810 vminpu=0.9 vmaxpu=1.10
+New Load.2c  Bus1=2.3 Phases=1 Model=1 kV=76.21 kW=10850 kvar=6350 vminpu=0.9 vmaxpu=1.10
+New Load.3a  Bus1=3.1 Phases=1 Model=1 kV=76.21 kW=18840 kvar=3800 vminpu=0.9 vmaxpu=1.10
+New Load.3b  Bus1=3.2 Phases=1 Model=1 kV=76.21 kW=28260 kvar=5700 vminpu=0.9 vmaxpu=1.10
+New Load.3c  Bus1=3.3 Phases=1 Model=1 kV=76.21 kW=47100 kvar=9500 vminpu=0.9 vmaxpu=1.10
+New Load.4a  Bus1=4.1 Phases=1 Model=1 kV=76.21 kW=9560 kvar=-780 vminpu=0.9 vmaxpu=1.10
+New Load.4b  Bus1=4.2 Phases=1 Model=1 kV=76.21 kW=14340 kvar=-1170 vminpu=0.9 vmaxpu=1.10
+New Load.4c  Bus1=4.3 Phases=1 Model=1 kV=76.21 kW=23900 kvar=-1950 vminpu=0.9 vmaxpu=1.10
+New Load.5a  Bus1=5.1 Phases=1 Model=1 kV=76.21 kW=1520 kvar=320 vminpu=0.9 vmaxpu=1.10
+New Load.5b  Bus1=5.2 Phases=1 Model=1 kV=76.21 kW=2280 kvar=480 vminpu=0.9 vmaxpu=1.10
+New Load.5c  Bus1=5.3 Phases=1 Model=1 kV=76.21 kW=3800 kvar=800 vminpu=0.9 vmaxpu=1.10
+New Load.6a  Bus1=6.1 Phases=1 Model=1 kV=19.05 kW=2240 kvar=1500 vminpu=0.9 vmaxpu=1.10
+New Load.6b  Bus1=6.2 Phases=1 Model=1 kV=19.05 kW=3360 kvar=2250 vminpu=0.9 vmaxpu=1.10
+New Load.6c  Bus1=6.3 Phases=1 Model=1 kV=19.05 kW=5600 kvar=3750 vminpu=0.9 vmaxpu=1.10
+New Load.9a  Bus1=9.1 Phases=1 Model=1 kV=19.05 kW=5900 kvar=3320 vminpu=0.9 vmaxpu=1.10
+New Load.9b  Bus1=9.2 Phases=1 Model=1 kV=19.05 kW=8850 kvar=4980 vminpu=0.9 vmaxpu=1.10
+New Load.9c  Bus1=9.3 Phases=1 Model=1 kV=19.05 kW=14750 kvar=8300 vminpu=0.9 vmaxpu=1.10
+New Load.10a  Bus1=10.1 Phases=1 Model=1 kV=19.05 kW=1800 kvar=1160 vminpu=0.9 vmaxpu=1.10
+New Load.10b  Bus1=10.2 Phases=1 Model=1 kV=19.05 kW=2700 kvar=1740 vminpu=0.9 vmaxpu=1.10
+New Load.10c  Bus1=10.3 Phases=1 Model=1 kV=19.05 kW=4500 kvar=2900 vminpu=0.9 vmaxpu=1.10
+New Load.11a  Bus1=11.1 Phases=1 Model=1 kV=19.05 kW=700 kvar=360 vminpu=0.9 vmaxpu=1.10
+New Load.11b  Bus1=11.2 Phases=1 Model=1 kV=19.05 kW=1050 kvar=540 vminpu=0.9 vmaxpu=1.10
+New Load.11c  Bus1=11.3 Phases=1 Model=1 kV=19.05 kW=1750 kvar=900 vminpu=0.9 vmaxpu=1.10
+New Load.12a  Bus1=12.1 Phases=1 Model=1 kV=19.05 kW=1220 kvar=320 vminpu=0.9 vmaxpu=1.10
+New Load.12b  Bus1=12.2 Phases=1 Model=1 kV=19.05 kW=1830 kvar=480 vminpu=0.9 vmaxpu=1.10
+New Load.12c  Bus1=12.3 Phases=1 Model=1 kV=19.05 kW=3050 kvar=800 vminpu=0.9 vmaxpu=1.10
+New Load.13a  Bus1=13.1 Phases=1 Model=1 kV=19.05 kW=2700 kvar=1160 vminpu=0.9 vmaxpu=1.10
+New Load.13b  Bus1=13.2 Phases=1 Model=1 kV=19.05 kW=4050 kvar=1740 vminpu=0.9 vmaxpu=1.10
+New Load.13c  Bus1=13.3 Phases=1 Model=1 kV=19.05 kW=6750 kvar=2900 vminpu=0.9 vmaxpu=1.10
+New Load.14a  Bus1=14.1 Phases=1 Model=1 kV=19.05 kW=2980 kvar=1000 vminpu=0.9 vmaxpu=1.10
+New Load.14b  Bus1=14.2 Phases=1 Model=1 kV=19.05 kW=4470 kvar=1500 vminpu=0.9 vmaxpu=1.10
+New Load.14c  Bus1=14.3 Phases=1 Model=1 kV=19.05 kW=7450 kvar=2500 vminpu=0.9 vmaxpu=1.10
+*/
+
+!Defining Shunts
+New Capacitor.9 Bus1=9 kV=33.00 kvar=19000.00
+
+!Defining Generators
+New Generator.2  Bus1=2  kV=132.00 kW=40000.00 Model=3 Vpu=1.045 Maxkvar=50000 Minkvar=-40000 ! kvar=42400.00
+New Generator.3  Bus1=3  kV=132.00 kW=1.00 Model=3 Vpu=1.010 Maxkvar=40000 Minkvar=0 ! kvar=23400.00
+New Generator.6  Bus1=6  kV=33.00 kW=1.00 Model=3 Vpu=1.070 Maxkvar=24000 Minkvar=-6000 ! kvar=12200.00
+New Generator.8  Bus1=8  kV=11.00 kW=1.00 Model=3 Vpu=1.090 Maxkvar=24000 Minkvar=-6000 ! kvar=17400.00
+
+!Let the openDSS estimate the voltage bases
+Set Voltagebases=[1.00, 11.00, 33.00, 132.00, 0.58, 6.35, 19.05, 76.21]
+Calcvoltagebases

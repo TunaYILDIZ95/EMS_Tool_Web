@@ -48,7 +48,7 @@ def get_user_storage(user):
 #     return redirect('home')
 
 
-def tools_page(request):
+def powerflow_analysis(request):
     form = FileUpload()
     path = 'media/storage/group_{0}/user_{1}/'.format(request.user.group_id, request.user.id)
     if os.path.exists(path):
@@ -56,7 +56,83 @@ def tools_page(request):
     else:
         os.makedirs(path)
         user_files = os.listdir(path)
-    return render(request,'../templates/power_system_tools/tools_page.html',{'form':form,'user_data':request.user,'user_files':user_files})
+    return render(request,'../templates/power_system_tools/powerflow_analysis.html',{'form':form,'user_data':request.user,'user_files':user_files})
+
+# def state_estimation(request):
+#     # form = FileUpload()
+#     # path = 'media/storage/group_{0}/user_{1}/'.format(request.user.group_id, request.user.id)
+#     # if os.path.exists(path):
+#     #     user_files = os.listdir(path)
+#     # else:
+#     #     os.makedirs(path)
+#     #     user_files = os.listdir(path)
+    
+#     # example_storage_path = 'media/examples/'
+#     # example_files = os.listdir(example_storage_path) if os.path.exists(example_storage_path) else []
+#     # return render(request,'../templates/power_system_tools/state_estimation.html',{'form':form,'user_data':request.user,'user_files':user_files,'example_files': example_files})
+#     user_storage_path = f'media/storage/group_{request.user.group_id}/user_{request.user.id}/'
+#     example_storage_path = 'media/examples/'
+
+#     # Get user files (files only)
+#     user_files = []
+#     if os.path.exists(user_storage_path):
+#         user_files = [
+#             {"name": f, "is_folder": False}  # User files are always files
+#             for f in os.listdir(user_storage_path)
+#             if os.path.isfile(os.path.join(user_storage_path, f))
+#         ]
+
+#     # Get example files & folders
+#     example_items = []
+#     if os.path.exists(example_storage_path):
+#         example_items = [
+#             {"name": f, "is_folder": os.path.isdir(os.path.join(example_storage_path, f))}
+#             for f in os.listdir(example_storage_path)
+#         ]
+
+#     context = {
+#         'user_files': user_files,
+#         'example_items': example_items,
+#         'example_base_path': example_storage_path,
+#         'user_data': request.user
+#     }
+
+#     return render(request, 'power_system_tools/state_estimation.html', context)
+
+def state_estimation(request):
+    user_storage_path = f'media/storage/group_{request.user.group_id}/user_{request.user.id}/'
+    example_storage_path = 'media/examples/'
+
+    # Get user files (files only)
+    user_files = []
+    if os.path.exists(user_storage_path):
+        user_files = [
+            {"name": f, "is_folder": False}  # User files are always files
+            for f in os.listdir(user_storage_path)
+            if os.path.isfile(os.path.join(user_storage_path, f))
+        ]
+
+    # Get example files & folders
+    example_items = []
+    if os.path.exists(example_storage_path):
+        example_items = [
+            {"name": f, "is_folder": os.path.isdir(os.path.join(example_storage_path, f))}
+            for f in os.listdir(example_storage_path)
+        ]
+
+    # Check if the request comes from JavaScript (fetch)
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({"user_files": user_files, "example_files": example_items})
+
+    # Normal HTML page rendering
+    context = {
+        'user_files': user_files,
+        'example_items': example_items,
+        'example_base_path': example_storage_path,
+        'user_data': request.user
+    }
+    return render(request, 'power_system_tools/state_estimation.html', context)
+    
 
 
 def upload_files(request):
@@ -72,6 +148,27 @@ def upload_files(request):
     else:
         form = FileUpload()
         return render(request, '../templates/power_system_tools/tools_page.html', {'form':form, 'user_data':request.user ,'user_files':user_files})
+    
+def load_folder(request):
+    base_path = "media/examples/"  # Base path for examples
+    folder_name = request.GET.get("folder", "")
+    if folder_name == "..":
+        # Navigate one level up
+        parent_folder = os.path.dirname(base_path.rstrip("/"))
+        folder_path = parent_folder
+    else:
+        folder_path = os.path.join(base_path, folder_name)
+
+    if not os.path.exists(folder_path):
+        return JsonResponse({"error": "Folder not found"}, status=404)
+
+    # Retrieve subfolders & files
+    folder_items = [
+        {"name": f, "is_folder": os.path.isdir(os.path.join(folder_path, f))}
+        for f in os.listdir(folder_path)
+    ]
+
+    return JsonResponse({"items": folder_items, "parent_folder": base_path})
 
 
 class GraphData(APIView):
