@@ -58,28 +58,32 @@ class SubscriptionSignUp(CreateView):
             role = 'Guest'
             sub_start_date = ''
             sub_end_date = ''
-            storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            # storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            storage_size = 100
         elif self.kwargs.get("sub_type") == 'Silver':
             total_user_number = 5
             remaining_user_number = 5
             role = 'Manager'
             sub_start_date = date.today()
             sub_end_date = date.today()+relativedelta(months = 1)
-            storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            # storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            storage_size = 100
         elif self.kwargs.get("sub_type") == 'Gold':
             total_user_number = 10
             remaining_user_number = 10
             role = 'Manager'
             sub_start_date = date.today()
             sub_end_date = date.today()+relativedelta(months = 1)
-            storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            # storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            storage_size = 100
         elif self.kwargs.get("sub_type") == 'Platinum':
             total_user_number = 30
             remaining_user_number = 30
             role = 'Manager'
             sub_start_date = date.today()
             sub_end_date = date.today()+relativedelta(months = 1)
-            storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            # storage_size = Storage.objects.get(sub_type = self.kwargs.get("sub_type")).storage_limit
+            storage_size = 100
         user = form.save(sub_type = self.kwargs.get("sub_type"),storage_size = storage_size , total_user_number = total_user_number, remaining_user_number = remaining_user_number,
          role = role, sub_start_date=sub_start_date, sub_end_date = sub_end_date)
         login(self.request, user)
